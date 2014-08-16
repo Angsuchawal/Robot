@@ -1,0 +1,40 @@
+*** Settings ***
+Documentation       ค้นหาจาก Google.co.th
+Library             Selenium2Library
+Test Teardown       Close All Browsers
+
+*** Variables ***
+${Google URL}       http://www.google.co.th
+
+*** Testcases ***
+ค้นหาข้อมูลโรคติดต่อจาก Google
+	[Template]      ค้นหาข้อมูล
+	#------------------------------------#
+	#  Key Word     |   Expected Result  #
+	#------------------------------------#
+		อีโบลา                                 อีโบลา
+		ebola           ebola
+	
+*** Keywords ***
+ค้นหาข้อมูล
+	[Arguments]     ${keyword}    ${expected result}
+	
+	เปิดหน้าแรกของ Google
+	ใส่คำที่ต้องการค้นหา          ${keyword}
+	
+	Wait Until Page Contains    ${expected result}
+	
+เปิดหน้าแรกของ Google
+	Open Browser    ${Google URL}
+	
+ใส่คำที่ต้องการค้นหา
+	[Arguments]     ${keyword}
+	Input Text      id=gbqfq    ${keyword}
+	Click Button    id=gbqfb
+	
+	
+	#-----------------------------------------------------
+	#Open Browser    ${Google URL}
+	#Input Text      id=gbqfq    ${keyword}
+	#Click Button    id=gbqfb
+	#Wait Until Page Contains    ${expected result}
